@@ -1,0 +1,149 @@
+---
+title: "EDA de los datasets"
+author: "sv"
+date: "09/01/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduccion
+
+Hay que trabajar bastante los .xls porque están muy formateados. ASí no se pueden importar.
+
+Dimensiones de interés:
+
+* divulgación
+* cooperación 
+* transferencia
+
+Cada dimensión es una hoja en el libro .xls
+
+Y variables de corte: año, genero, director etc.
+
+Se pueden unificar esas hojas? trabajarlas en excel...
+
+
+## Datos 2015-2017 
+
+### Transferencia
+```{r, message=FALSE}
+library(readr)
+transf15_17 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/transf15_17.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+```
+
+```{r}
+transf15_17 
+```
+
+### Cooperación
+```{r, message=FALSE}
+library(readr)
+coop15_17 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/coop15_17.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+
+coop15_17 <- coop15_17 %>% 
+slice( 0:197)
+```
+
+```{r}
+coop15_17 
+```
+
+### Divulgación
+```{r, message=FALSE}
+library(readr)
+divul15_17 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/divul15_17.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+```
+
+```{r}
+divul15_17 
+```
+
+## Datos 2017-2019 
+
+### Transferencia
+```{r, message=FALSE}
+library(readr)
+transf17_19 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/transf17_19.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+```
+
+```{r}
+transf17_19
+```
+
+### Cooperación
+```{r, message=FALSE}
+library(readr)
+coop17_19 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/coop17_19.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+```
+
+```{r}
+coop17_19 
+```
+
+### Divulgación
+```{r, message=FALSE}
+library(readr)
+divul17_19 <- read_delim("C:/Users/User/Desktop/Seba/Otros/datasets_2021/unq_bid/divul17_19.txt", 
+    "\t", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ".", encoding = "ISO-8859-1"), 
+    trim_ws = TRUE)
+divul17_19 <- divul17_19%>% 
+slice( 0:604)
+```
+
+```{r}
+divul17_19 
+```
+
+## Normalización de variables
+
+```{r}
+library(janitor)
+compare_df_cols(coop15_17,transf15_17, divul15_17, transf17_19, coop17_19, divul17_19 )  #All.list compara todo, sino pones los datasets a comparar separados por coma
+```
+
+### Tipo de variables
+
+* Alcance es propia de la coop. y debe ser chr
+
+```{r}
+transf15_17$alcance <- as.character(transf15_17$alcance)
+divul15_17$alcance <- as.character(divul15_17$alcance)
+transf17_19$alcance <- as.character(transf17_19$alcance)
+divul17_19$alcance <- as.character(divul17_19$alcance)
+```
+
+* contrato_reg es propio de la transf y debe ser chr
+
+```{r}
+transf15_17$alcance <- as.character(transf15_17$alcance)
+divul15_17$alcance <- as.character(divul15_17$alcance)
+transf17_19$alcance <- as.character(transf17_19$alcance)
+divul17_19$alcance <- as.character(divul17_19$alcance)
+```
+
+
+
